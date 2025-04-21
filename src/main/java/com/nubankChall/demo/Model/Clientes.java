@@ -3,6 +3,8 @@ package com.nubankChall.demo.Model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -27,8 +29,9 @@ public class Clientes {
 
     private String nome;
 
-    @OneToMany( mappedBy = "clientes", 
+    @OneToMany( mappedBy = "cliente", 
                 cascade = CascadeType.ALL, 
                 orphanRemoval = true )
-    private List<Object> contatos = new ArrayList<Object>();
+    @JsonManagedReference
+    private List<Contato> contatos = new ArrayList<Contato>();
 }
