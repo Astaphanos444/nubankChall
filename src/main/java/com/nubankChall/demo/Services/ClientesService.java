@@ -52,6 +52,23 @@ public class ClientesService {
             .collect(Collectors.toList());
     } 
 
+    public List<ContatoResponseDto> listarContatosPorClienteId(Long clienteId)
+        throws RuntimeException
+    {
+        Clientes cliente = rep.findById(clienteId)
+            .orElseThrow(()->new RuntimeException("cliente não encontrado"));
+        return cliente.getContatos()
+            .stream()
+            .map(c->{
+                ContatoResponseDto contato = new ContatoResponseDto(
+                    c.getId(), 
+                    c.getTelefone(), 
+                    c.getEmail(),
+                    cliente.getId());
+                    return contato;
+            }).collect(Collectors.toList());
+    }
+
     private ClientesResponseDto toDto(Clientes cliente)
     {
         List<ContatoResponseDto> contatos = cliente.getContatos()
